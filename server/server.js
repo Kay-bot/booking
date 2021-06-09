@@ -1,9 +1,11 @@
-const express = require('express')
+import express from 'express'
+import {readdirSync} from 'fs'
 
 const app = express()
 
-app.get('/api/:message', (req, res)=>{
-  res.status(200).send(req.params.message);
-})
+// route middleware
+readdirSync("./routes").map((r) => 
+app.use("/api", require(`./routes/${r}`))
+);
 
 app.listen(8000, ()=>console.log(`Server is running on port 8000`));
